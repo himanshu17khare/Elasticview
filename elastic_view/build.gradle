@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'guru.stefma.bintrayrelease'
+
+android {
+
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            tasks.withType(Javadoc).all { enabled = false }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:design:28.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+repositories {
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
+}
+
+version = "0.1.0"
+group = "com.github.armcha"
+publish {
+    userOrg = 'armcha'
+    artifactId = 'ElasticView'
+    desc = 'ElasticView'
+    website = 'https://github.com/armcha/ElasticView'
+}
